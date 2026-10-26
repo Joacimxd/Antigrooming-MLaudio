@@ -1,0 +1,10 @@
+services:
+  grooming-risk-api:
+    build: .
+    image: grooming-risk-api:latest
+    ports:
+      - "8000:8000"
+    environment:
+      GR_MAX_UPLOAD_MB: "50"
+      GR_MAX_AUDIO_SEC: "600"
+    restart: unless-stopped

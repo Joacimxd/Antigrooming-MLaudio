@@ -1,0 +1,70 @@
+{
+  "extractor": "ecapa",
+  "classes": [
+    "nino",
+    "adolescente",
+    "adulto"
+  ],
+  "metrics": {
+    "clip": {
+      "f1_macro": 0.817,
+      "balanced_acc": 0.814,
+      "recall_nino": 0.987,
+      "recall_adolescente": 0.604,
+      "recall_adulto": 0.852,
+      "auc_menor_vs_adulto": 0.943
+    },
+    "hablante": {
+      "f1_macro": 0.837,
+      "balanced_acc": 0.819,
+      "recall_nino": 1.0,
+      "recall_adolescente": 0.5,
+      "recall_adulto": 0.958,
+      "auc_menor_vs_adulto": 0.998
+    }
+  },
+  "model_name": "B_ecapa_svm",
+  "hyperparameters": {
+    "svc__C": 0.3,
+    "svc__gamma": "scale"
+  },
+  "dataset": "datasets/merged (ver construccion_dataset.ipynb)",
+  "train_sources": [
+    "common_voice",
+    "enni"
+  ],
+  "n_train_clips": 16078,
+  "n_speakers": 524,
+  "comparison_test_clip": {
+    "A_handcrafted_gbm": {
+      "f1_macro": 0.708,
+      "balanced_acc": 0.71,
+      "recall_nino": 0.997,
+      "recall_adolescente": 0.261,
+      "recall_adulto": 0.872,
+      "auc_menor_vs_adulto": 0.87
+    },
+    "B_ecapa_svm": {
+      "f1_macro": 0.817,
+      "balanced_acc": 0.814,
+      "recall_nino": 0.987,
+      "recall_adolescente": 0.604,
+      "recall_adulto": 0.852,
+      "auc_menor_vs_adulto": 0.943
+    },
+    "C_wavlm_logreg": {
+      "f1_macro": 0.786,
+      "balanced_acc": 0.778,
+      "recall_nino": 1.0,
+      "recall_adolescente": 0.427,
+      "recall_adulto": 0.906,
+      "auc_menor_vs_adulto": 0.94
+    }
+  },
+  "limitations": [
+    "nino solo de habla sintetizada (ENNI); adolescente/adulto solo de Common Voice: clase y canal confundidos",
+    "Common Voice teens = < 19 anos (etiqueta ruidosa)",
+    "Common Voice sin client_id: pseudo-hablantes por (decada, genero, acento)",
+    "Solo ingles"
+  ]
+}
