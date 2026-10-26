@@ -7,7 +7,7 @@ Cada cargador devuelve un DataFrame con columnas:
 sea correcta al mezclar datasets. Los cargadores que no encuentren su carpeta
 devuelven un DataFrame vacío, así puedes usar solo los corpus que tengas.
 
-Estructura esperada en data/raw/ (ver data/README.md):
+Estructura esperada en datasets/raw/ (ver datasets/README.md):
     common_voice/<idioma>/validated.tsv + clips/
     speechocean762/{train,test}/{wav.scp,utt2spk,spk2age} + WAVE/
     myst/**/<student_id>/<session_id>/*.flac

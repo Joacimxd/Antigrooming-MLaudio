@@ -28,7 +28,7 @@ Al modificar este proyecto, Claude (y cualquier colaborador) debe:
 4. Documentar cualquier cambio en los pesos de riesgo (`RISK_WEIGHTS`) y en los umbrales.
 
 ## Privacidad y ética
-- Los audios contienen voces de menores: datos personales sensibles. No versionarlos (`data/raw/`
+- Los audios contienen voces de menores: datos personales sensibles. No versionarlos (`datasets/raw/`
   está en `.gitignore`), respetar las licencias de cada corpus y usarlos solo para investigación.
 - La API no guarda audios: se escriben en un temporal que se borra al terminar la petición.
 - Cualquier despliegue real requiere base legal, consentimiento/aviso adecuado y evaluación de
@@ -56,7 +56,7 @@ notebooks/riesgo_grooming_edad_voz.ipynb   entrenamiento, comparación y selecci
 api/main.py            FastAPI: /health, /model-info, /analyze
 scripts/download_pretrained.py             descarga pesos de ECAPA/WavLM (usado en Docker)
 models/                best_model.joblib + model_card.json (los genera el notebook)
-data/README.md         dónde conseguir y cómo ordenar cada corpus
+datasets/README.md         dónde conseguir y cómo ordenar cada corpus
 tests/                 pytest de la lógica de riesgo
 ```
 

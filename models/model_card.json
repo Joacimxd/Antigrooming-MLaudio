@@ -59,6 +59,80 @@
       "recall_adolescente": 0.427,
       "recall_adulto": 0.906,
       "auc_menor_vs_adulto": 0.94
+    },
+    "A2_handcrafted_rf": {
+      "f1_macro": 0.73,
+      "balanced_acc": 0.728,
+      "recall_nino": 0.994,
+      "recall_adolescente": 0.308,
+      "recall_adulto": 0.884,
+      "auc_menor_vs_adulto": 0.9
+    },
+    "A3_handcrafted_logreg": {
+      "f1_macro": 0.598,
+      "balanced_acc": 0.658,
+      "recall_nino": 0.999,
+      "recall_adolescente": 0.01,
+      "recall_adulto": 0.965,
+      "auc_menor_vs_adulto": 0.872
+    },
+    "B2_ecapa_rf": {
+      "f1_macro": 0.776,
+      "balanced_acc": 0.768,
+      "recall_nino": 0.965,
+      "recall_adolescente": 0.43,
+      "recall_adulto": 0.91,
+      "auc_menor_vs_adulto": 0.941
+    }
+  },
+  "efficiency_cpu": {
+    "B_ecapa_svm": {
+      "f1_macro_clip": 0.817,
+      "ms_extractor": 28.622,
+      "ms_clasificador": 0.826,
+      "ms_total": 29.448,
+      "MB_clasificador": 15.895,
+      "MB_pesos_extractor": 83.07
+    },
+    "C_wavlm_logreg": {
+      "f1_macro_clip": 0.786,
+      "ms_extractor": 88.991,
+      "ms_clasificador": 0.002,
+      "ms_total": 88.993,
+      "MB_clasificador": 0.058,
+      "MB_pesos_extractor": 377.528
+    },
+    "B2_ecapa_rf": {
+      "f1_macro_clip": 0.776,
+      "ms_extractor": 28.622,
+      "ms_clasificador": 0.011,
+      "ms_total": 28.633,
+      "MB_clasificador": 37.73,
+      "MB_pesos_extractor": 83.07
+    },
+    "A2_handcrafted_rf": {
+      "f1_macro_clip": 0.73,
+      "ms_extractor": 16.477,
+      "ms_clasificador": 0.011,
+      "ms_total": 16.488,
+      "MB_clasificador": 35.94,
+      "MB_pesos_extractor": 0.0
+    },
+    "A_handcrafted_gbm": {
+      "f1_macro_clip": 0.708,
+      "ms_extractor": 16.477,
+      "ms_clasificador": 0.008,
+      "ms_total": 16.485,
+      "MB_clasificador": 2.024,
+      "MB_pesos_extractor": 0.0
+    },
+    "A3_handcrafted_logreg": {
+      "f1_macro_clip": 0.598,
+      "ms_extractor": 16.477,
+      "ms_clasificador": 0.0,
+      "ms_total": 16.477,
+      "MB_clasificador": 0.007,
+      "MB_pesos_extractor": 0.0
     }
   },
   "limitations": [

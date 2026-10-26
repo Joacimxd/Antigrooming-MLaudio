@@ -17,7 +17,7 @@ referencia; el mejor se exporta automáticamente para la API.
 python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# 1. Descarga y ordena los corpus → data/README.md
+# 1. Descarga y ordena los corpus → datasets/README.md
 # 2. Entrena: ejecuta el notebook completo (primero con SUBSAMPLE=600 para probar)
 jupyter lab notebooks/riesgo_grooming_edad_voz.ipynb
 
