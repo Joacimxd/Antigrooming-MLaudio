@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+
+# Datos sensibles y artefactos locales (el README de datasets queda versionado)
+datasets/*
+!datasets/README.md
+
+# Pesos descargados (scripts/download_pretrained.py)
+pretrained/
