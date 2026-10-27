@@ -30,6 +30,8 @@ Al modificar este proyecto, Claude (y cualquier colaborador) debe:
 ## Privacidad y ética
 - Los audios contienen voces de menores: datos personales sensibles. No versionarlos (`datasets/raw/`
   está en `.gitignore`), respetar las licencias de cada corpus y usarlos solo para investigación.
+- Excepción decidida por el equipo: `muestras_audio/` (ejemplos escuchables de cada etapa, Common Voice CC0
+  y voz infantil sintetizada de ENNI) sí se versiona. Se regenera con `scripts/generar_muestras_audio.py`.
 - La API no guarda audios: se escriben en un temporal que se borra al terminar la petición.
 - Cualquier despliegue real requiere base legal, consentimiento/aviso adecuado y evaluación de
   impacto (p.ej. leyes de protección de datos aplicables).
@@ -55,6 +57,10 @@ grooming_risk/         paquete compartido por notebook y API
 notebooks/riesgo_grooming_edad_voz.ipynb   entrenamiento, comparación y selección
 api/main.py            FastAPI: /health, /model-info, /analyze
 scripts/download_pretrained.py             descarga pesos de ECAPA/WavLM (usado en Docker)
+scripts/generar_muestras_audio.py          genera muestras_audio/ (un ejemplo escuchable por etapa)
+scripts/figuras_reporte.py                 regenera reporte/figuras/ a su ancho de impresión
+muestras_audio/        audios de ejemplo versionados + indice.csv (se escuchan con grooming_risk.muestras)
+reporte/               reporte.tex (LaTeX, compila con tectonic) y figuras/
 models/                best_model.joblib + model_card.json (los genera el notebook)
 datasets/README.md         dónde conseguir y cómo ordenar cada corpus
 tests/                 pytest de la lógica de riesgo

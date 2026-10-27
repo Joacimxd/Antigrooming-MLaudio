@@ -12,6 +12,11 @@
 Se comparan tres modelos (acústico + GBM, ECAPA + SVM, WavLM + regresión logística) y uno de
 referencia; el mejor se exporta automáticamente para la API.
 
+## Escuchar el sistema sin entrenar
+`muestras_audio/` trae ejemplos de cada etapa (preprocesamiento, los 12 filtros, moduladores de voz y
+conversaciones simuladas con su diarización y su riesgo). Se escuchan en las celdas «Escucha» de los
+notebooks o abriendo los archivos; ver [muestras_audio/README.md](muestras_audio/README.md).
+
 ## Pasos
 ```bash
 python3.12 -m venv .venv && source .venv/bin/activate
@@ -31,6 +36,11 @@ curl -F "file=@llamada.mp3" "http://localhost:8000/analyze?num_speakers=2"
 ```
 
 ## Respuesta de ejemplo
+`voice_modulation` es una bandera **informativa** por hablante (detector de moduladores de voz, sección 10
+del notebook): no cambia el riesgo ni las probabilidades de edad; si se activa, la edad estimada de ese
+hablante es menos fiable y conviene priorizar su revisión humana. Es `null` si no existe
+`models/detector_modulador.joblib`.
+
 ```json
 {
   "risk_score": 0.83,
@@ -40,8 +50,10 @@ curl -F "file=@llamada.mp3" "http://localhost:8000/analyze?num_speakers=2"
   "adult_speaker": 0,
   "num_speakers": 2,
   "speakers": [
-    {"speaker": 0, "duration_sec": 14.2, "probabilities": {"nino": 0.02, "adolescente": 0.05, "adulto": 0.93}, "predicted_age_group": "adulto", "segments_sec": [[0.0, 4.1], ...]},
-    {"speaker": 1, "duration_sec": 9.8,  "probabilities": {"nino": 0.88, "adolescente": 0.09, "adulto": 0.03}, "predicted_age_group": "nino", "segments_sec": [[4.5, 7.9], ...]}
+    {"speaker": 0, "duration_sec": 14.2, "probabilities": {"nino": 0.02, "adolescente": 0.05, "adulto": 0.93}, "predicted_age_group": "adulto", "segments_sec": [[0.0, 4.1], ...],
+     "voice_modulation": {"probability": 0.004, "possible_modulation": false, "threshold": 0.369}},
+    {"speaker": 1, "duration_sec": 9.8,  "probabilities": {"nino": 0.88, "adolescente": 0.09, "adulto": 0.03}, "predicted_age_group": "nino", "segments_sec": [[4.5, 7.9], ...],
+     "voice_modulation": {"probability": 0.001, "possible_modulation": false, "threshold": 0.369}}
   ],
   "disclaimer": "Este resultado es solo una ALERTA / estimación probabilística de riesgo ..."
 }

@@ -44,12 +44,19 @@ app = FastAPI(
 )
 
 
+class ModulationOut(BaseModel):
+    probability: float = Field(..., ge=0, le=1)
+    possible_modulation: bool = Field(..., description="Bandera informativa: no altera el riesgo")
+    threshold: float
+
+
 class SpeakerOut(BaseModel):
     speaker: int
     duration_sec: float
     segments_sec: list[list[float]]
     probabilities: dict[str, float]
     predicted_age_group: str
+    voice_modulation: ModulationOut | None = None
 
 
 class AnalysisOut(BaseModel):
@@ -73,7 +80,8 @@ def health():
 @app.get("/model-info")
 def model_info():
     analyzer: GroomingRiskAnalyzer = state["analyzer"]
-    return {**analyzer.age.card, "disclaimer": DISCLAIMER}
+    detector = analyzer.modulator.card if analyzer.modulator is not None else None
+    return {**analyzer.age.card, "modulator_detector": detector, "disclaimer": DISCLAIMER}
 
 
 @app.post("/analyze", response_model=AnalysisOut)

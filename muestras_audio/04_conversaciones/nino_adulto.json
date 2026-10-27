@@ -1,0 +1,58 @@
+{
+ "risk_score": 0.6693,
+ "risk_percent": 66.9,
+ "risk_level": "alto",
+ "minor_speaker": 0,
+ "adult_speaker": 1,
+ "num_speakers": 2,
+ "speakers": [
+  {
+   "speaker": 0,
+   "duration_sec": 6.52,
+   "segments_sec": [
+    [
+     0.03,
+     5.06
+    ],
+    [
+     9.66,
+     11.16
+    ]
+   ],
+   "probabilities": {
+    "nino": 0.8655,
+    "adolescente": 0.1159,
+    "adulto": 0.0186
+   },
+   "predicted_age_group": "nino",
+   "voice_modulation": {
+    "probability": 0.0004,
+    "possible_modulation": false,
+    "threshold": 0.3695
+   }
+  },
+  {
+   "speaker": 1,
+   "duration_sec": 3.75,
+   "segments_sec": [
+    [
+     5.47,
+     9.22
+    ]
+   ],
+   "probabilities": {
+    "nino": 0.0036,
+    "adolescente": 0.2077,
+    "adulto": 0.7888
+   },
+   "predicted_age_group": "adulto",
+   "voice_modulation": {
+    "probability": 0.0011,
+    "possible_modulation": false,
+    "threshold": 0.3695
+   }
+  }
+ ],
+ "audio_duration_sec": 11.57,
+ "disclaimer": "Este resultado es solo una ALERTA / estimación probabilística de riesgo basada en la edad aparente de las voces. NO determina que exista grooming ni sustituye la revisión humana especializada. Muchas conversaciones legítimas (familia, docentes, médicos) entre menores y adultos generarán alertas."
+}
