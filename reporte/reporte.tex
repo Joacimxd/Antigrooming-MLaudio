@@ -103,7 +103,7 @@ Una decisión central del diseño es que el sistema \textbf{no transcribe ni int
   \item \textbf{Privacidad y confidencialidad de las comunicaciones.} Analizar el contenido de conversaciones privadas es una de las intervenciones más intrusivas posibles. Las autoridades europeas de protección de datos (EDPB y EDPS) recomendaron eliminar la detección de grooming de la propuesta de reglamento europeo contra el abuso sexual infantil, por su carácter intrusivo, probabilístico y sus tasas de error, y fueron especialmente críticas con el escaneo de comunicaciones de \emph{audio}, que exigiría interceptación continua y en vivo~\cite{edpb2022}. Nuestro enfoque evita ese escaneo de contenido por diseño.
   \item \textbf{Minimización de datos.} De cada hablante solo se conservan tres probabilidades (niño, adolescente, adulto). No se generan transcripciones, no se guardan audios ni se identifica a nadie: el audio se procesa en memoria y se descarta al terminar.
   \item \textbf{Proporcionalidad.} Una alerta basada en la edad aparente permite priorizar casos sin exponer lo que dijeron menores y adultos inocentes, que serán la mayoría de las alertas.
-  \item \textbf{Independencia del idioma.} Las pistas de edad (tono y formantes) dependen de la fisiología, no del idioma ni del vocabulario. Un análisis de contenido necesitaría modelos de lenguaje por idioma, jerga y contexto cultural.
+  \item \textbf{Independencia del idioma.} Las pistas de edad (tono y resonancias de la voz) dependen sobre todo de la anatomía, no del idioma ni del vocabulario; la sección~\ref{sec:idioma} reúne la evidencia y sus matices. Un análisis de contenido, en cambio, necesitaría modelos por idioma, jerga y contexto cultural.
   \item \textbf{Menor superficie de riesgo.} Un sistema que nunca produce texto de las conversaciones no puede filtrarlo, ni usarse para vigilar lo que la gente dice.
 \end{enumerate}
 
@@ -234,6 +234,50 @@ B2 & ECAPA-TDNN & Bosque aleatorio & Misma representación que B con otro clasif
 \end{tabularx}
 \end{table}
 
+\subsection{Cómo funciona cada modelo}
+
+Cada modelo tiene dos piezas: un \emph{extractor}, que convierte la voz en un vector de números, y un \emph{clasificador}, que convierte ese vector en tres probabilidades.
+
+\paragraph{Extractores.}
+\begin{itemize}
+  \item \textbf{Acústico clásico.} Mide la voz con fórmulas de procesamiento de señales, sin aprendizaje. El tono se estima buscando cada cuánto se repite la onda (algoritmo YIN). Los formantes, que son las resonancias del tracto vocal, se obtienen modelando la voz como un filtro (predicción lineal) y buscando sus picos. Los coeficientes cepstrales en escala mel resumen la forma del espectro tal como la percibe el oído. Cada medida se resume con su media, desviación, mediana y percentiles.
+  \item \textbf{ECAPA-TDNN}~\cite{ecapa2020}. Red neuronal convolucional que recorre el espectrograma a lo largo del tiempo. Sus bloques aprenden a resaltar los canales de frecuencia más útiles (atención por canal) y combinan información de varias capas. Al final, una capa de \emph{agrupamiento estadístico con atención} pondera los instantes más informativos y produce un vector de 192 números por fragmento. Se entrenó para distinguir a miles de personas de VoxCeleb, así que el vector captura \emph{cómo suena} una voz y no \emph{qué dice}.
+  \item \textbf{WavLM}~\cite{wavlm2022}. Una red convolucional convierte la onda en una secuencia de vectores, uno cada 20\,ms, y un Transformer de 12 capas los relaciona entre sí. Se entrenó sin etiquetas: se tapan partes del audio, a veces mezclado con otra voz o con ruido, y el modelo aprende a predecir lo que falta. Sus capas intermedias guardan información sobre el hablante y las finales sobre las palabras. Usamos el promedio de las capas 3 a 8, resumido con media y desviación en el tiempo, y no modificamos sus pesos.
+\end{itemize}
+
+\paragraph{Clasificadores.}
+\begin{itemize}
+  \item \textbf{Potenciación del gradiente (A).} Construye cientos de árboles de decisión poco profundos en secuencia; cada árbol nuevo corrige los errores que dejaron los anteriores. Agrupa los valores en intervalos (histogramas) para entrenar rápido.
+  \item \textbf{Bosque aleatorio (A2, B2).} Entrena 300 árboles independientes, cada uno con una muestra distinta de los datos y un subconjunto al azar de las características, y promedia sus votos. La variedad entre árboles reduce el sobreajuste.
+  \item \textbf{Máquina de vectores de soporte (B).} Proyecta los vectores a un espacio de muchas dimensiones mediante un núcleo gaussiano, donde busca la frontera que deja el mayor margen posible entre clases. Solo los ejemplos cercanos a la frontera (los vectores de soporte) la definen, por eso funciona bien con pocos datos. Para tres clases entrena un clasificador por cada par de clases.
+  \item \textbf{Regresión logística (C, A3).} Asigna un peso a cada característica, suma y convierte el resultado en probabilidades con la función \emph{softmax}. Es una frontera lineal: simple, rápida y difícil de sobreajustar.
+  \item \textbf{Calibración sigmoide.} Después de entrenar, se ajusta una curva sigmoide sobre el conjunto de validación que convierte las salidas del clasificador en probabilidades fiables~\cite{platt1999}.
+\end{itemize}
+
+\subsection{Independencia del idioma: sustento y matices}
+\label{sec:idioma}
+
+La propuesta supone que la edad se puede estimar por la voz sin importar el idioma. La evidencia apoya esa idea en lo esencial, con matices que conviene conocer.
+
+\paragraph{Por qué la señal de edad no depende del idioma.}
+\begin{itemize}
+  \item \textbf{Es anatómica.} El tracto vocal crece con la edad: un estudio con resonancia magnética de 129 personas de 2 a 25 años midió ese crecimiento y lo relacionó con el descenso de los formantes~\cite{fitch1999}. Un análisis acústico de 436 niños de 5 a 17 años y 56 adultos mostró que el tono y los formantes bajan con la edad y alcanzan los valores adultos alrededor de los 15 años~\cite{lee1999}. Ningún idioma cambia el largo del tracto vocal ni el tamaño de las cuerdas vocales.
+  \item \textbf{La diferencia por edad es mucho mayor que la diferencia por idioma.} En nuestros datos, la mediana del tono pasa de 242\,Hz en niños a 154\,Hz en adultos: unos 7,8 semitonos. Entre idiomas, en cambio, el rango \emph{fisiológico} de tono de hablantes de inglés y de mandarín es prácticamente igual, y al leer un texto solo difiere un poco el tono medio~\cite{keating2012}. Entre inglés y alemán, las diferencias están sobre todo en cuánto \emph{varía} el tono dentro de una frase, más que en su nivel~\cite{mennen2012}.
+  \item \textbf{Las personas también lo logran.} Oyentes de un idioma estiman con cierto acierto la edad de hablantes de otro idioma, aunque aciertan más con el propio~\cite{gnevsheva2020}, y el tono medio es una de las pistas que más usan~\cite{jiao2019}.
+  \item \textbf{El modelo desplegado se basa en un extractor multilingüe.} ECAPA-TDNN se entrenó con VoxCeleb, cuya segunda versión reúne a más de 6\,000 personas de 145 nacionalidades que hablan muchos idiomas~\cite{voxceleb2}. Su vector describe la voz, no el idioma.
+  \item \textbf{El diseño no usa nada léxico.} No hay transcripción, palabras ni modelo de lenguaje; los rasgos se promedian sobre varios segundos, lo que diluye la entonación propia de cada frase.
+\end{itemize}
+
+\paragraph{Matices.}
+\begin{itemize}
+  \item El idioma sí cambia la \emph{prosodia}: cuánto sube y baja el tono y la velocidad del habla~\cite{mennen2012,keating2012}. La velocidad también es una pista de edad~\cite{jiao2019}, así que podría confundir al modelo en un idioma más rápido o más lento que el inglés.
+  \item WavLM se preentrenó solo con audio en inglés~\cite{wavlm2022}; es el extractor con más riesgo de depender del idioma.
+  \item En aprendizaje de máquina, transferir la predicción de edad a idiomas nuevos sin datos de ellos todavía da resultados irregulares~\cite{shu2026}.
+  \item Nuestro modelo se entrenó y evaluó solo con inglés.
+\end{itemize}
+
+\textbf{Conclusión.} La propuesta descansa en una señal anatómica que el idioma no modifica y cuya magnitud supera con mucho las diferencias entre idiomas, por lo que es razonable esperar que se transfiera. Aun así, es una hipótesis por validar: el siguiente paso es evaluar el mismo modelo con voces en español (por ejemplo, Common Voice en español) y comparar sus métricas con las obtenidas en inglés.
+
 \subsection{Protocolo de entrenamiento}
 
 Todos los modelos siguen el mismo protocolo, para que la comparación sea justa:
@@ -248,11 +292,49 @@ Todos los modelos siguen el mismo protocolo, para que la comparación sea justa:
 \subsection{Puntaje de riesgo}
 \label{sec:riesgo}
 
-Para cada par de hablantes distintos $i$ (posible menor) y $j$ (posible adulto):
+El puntaje responde a una sola pregunta: \emph{¿qué tan seguros estamos de que en este audio hablan una persona menor de edad y una persona adulta distintas?} Para cada par de hablantes distintos $i$ (posible menor) y $j$ (posible adulto):
 \begin{equation}
 r(i,j) = P_i(\text{niño})\,P_j(\text{adulto}) \cdot 0{,}90 \;+\; P_i(\text{adolescente})\,P_j(\text{adulto}) \cdot 0{,}60
 \end{equation}
-El riesgo del audio es el máximo sobre todos los pares, porque basta una pareja menor--adulto para alertar, con un piso de 0,05 para no afirmar nunca ``riesgo cero''. Los niveles son \textbf{bajo} ($<0{,}30$), \textbf{medio} ($0{,}30$--$0{,}60$) y \textbf{alto} ($\geq 0{,}60$). Por ejemplo, si un hablante es niño con 95\,\% de probabilidad y otro adulto con 90\,\%, el riesgo es $0{,}95 \times 0{,}90 \times 0{,}90 \approx 0{,}77$. Si el modelo duda, el riesgo baja en proporción.
+\begin{equation}
+R = \max\Big(0{,}05,\; \max_{i \neq j} r(i,j)\Big)
+\end{equation}
+
+\paragraph{Por qué cada elemento.}
+\begin{itemize}
+  \item \textbf{Probabilidad por hablante, promediada por duración.} Cada hablante se evalúa en trozos de hasta 6\,s y sus probabilidades se promedian ponderando por la duración de cada trozo: un trozo largo tiene más voz y es más fiable que uno corto.
+  \item \textbf{Pares de hablantes distintos ($i \neq j$).} La situación de interés requiere dos personas. Por eso primero se separan los hablantes y una misma voz nunca puede ser a la vez ``el menor'' y ``el adulto''.
+  \item \textbf{Producto $P_i(\cdot)\,P_j(\text{adulto})$.} Si las estimaciones de dos hablantes distintos son independientes, el producto es la probabilidad de que \emph{ambas} cosas sean ciertas a la vez: $i$ es menor \emph{y} $j$ es adulto. Así, la duda sobre cualquiera de los dos baja el riesgo; un mínimo o un promedio ignorarían parte de esa incertidumbre.
+  \item \textbf{Suma de los dos términos.} ``Niño'' y ``adolescente'' son excluyentes para un mismo hablante, así que sumar sus términos da el \emph{valor esperado} del peso del par. Un hablante que el modelo duda entre niño y adolescente aporta por ambas vías, sin contarse dos veces.
+  \item \textbf{Solo pares con un adulto.} El patrón que se busca es un adulto que interactúa con un menor. Las conversaciones entre menores, o solo entre adultos, no lo cumplen y quedan en el piso.
+  \item \textbf{Máximo sobre los pares.} Basta una pareja menor--adulto para que valga la pena revisar. Promediar diluiría la alerta en llamadas con muchos participantes; por ejemplo, un menor con cinco adultos daría un riesgo bajo.
+  \item \textbf{Peso de 0,90 para niño + adulto.} Es el valor máximo posible y es deliberadamente menor que 1: aun con certeza total sobre las edades, la combinación no prueba un abuso. Además, la edad estimada por la voz nunca es segura.
+  \item \textbf{Peso de 0,60 para adolescente + adulto.} \emph{No} significa que el riesgo para los adolescentes sea menor: la edad promedio de las víctimas en reportes de incitación en línea es de 15 años~\cite{ncmec2017}. El peso es menor por la \emph{fiabilidad de la estimación}. La voz adolescente alcanza valores adultos hacia los 15 años~\cite{lee1999} y se superpone con la adulta (figura~\ref{fig:f0}); nuestro modelo solo detecta el 60\,\% de los adolescentes; la etiqueta de entrenamiento incluye a personas de 18 y 19 años; y las interacciones legítimas entre adolescentes y adultos (escuela, trabajo, deporte) son muy frecuentes. El peso evita inundar a los revisores de falsas alertas, a costa de detectar menos casos de adolescentes. Es el parámetro que más conviene recalibrar con datos reales.
+  \item \textbf{Piso de 0,05.} El sistema nunca afirma ``riesgo cero'': la diarización o la estimación de edad pueden fallar.
+  \item \textbf{Umbral alto de 0,60.} Es exactamente el puntaje de un adolescente y un adulto con certeza total, y el de un niño y un adulto con un 67\,\% de certeza conjunta ($0{,}60 / 0{,}90$). Cualquiera de esas dos situaciones amerita revisión prioritaria.
+  \item \textbf{Umbral medio de 0,30.} Es la mitad del umbral alto: señales parciales (por ejemplo, un probable menor junto a una voz de edad dudosa) que conviene revisar sin urgencia.
+  \item \textbf{Probabilidades calibradas.} Todo lo anterior solo tiene sentido si un 0,9 significa de verdad un 90\,\% de aciertos. Por eso cada modelo se calibra antes de usarse.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Ejemplos del cálculo del riesgo.}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllcl@{}}
+\toprule
+\textbf{Situación} & \textbf{Hablante $i$} & \textbf{Hablante $j$} & \textbf{Riesgo} & \textbf{Nivel} \\
+\midrule
+Niño y adulto, ambos claros & niño 0,95 & adulto 0,90 & $0{,}95 \cdot 0{,}90 \cdot 0{,}90 = 0{,}77$ & alto \\
+Adolescente y adulto, ambos seguros & adolescente 1,00 & adulto 1,00 & $0{,}60$ & alto \\
+Probable niño, adulto dudoso & niño 0,80 & adulto 0,50 & $0{,}80 \cdot 0{,}50 \cdot 0{,}90 = 0{,}36$ & medio \\
+Hablante entre niño y adolescente & niño 0,5, adol. 0,4 & adulto 0,90 & $0{,}41 + 0{,}22 = 0{,}62$ & alto \\
+Dos adultos & adulto 0,95 & adulto 0,95 & piso: $0{,}05$ & bajo \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Supuestos y límites del puntaje.} Supone que los errores de los dos hablantes son independientes, lo que no se cumple del todo si comparten micrófono o ruido. Los pesos y umbrales son parámetros de diseño razonados, no aprendidos: deben ajustarse con conversaciones reales anotadas antes de cualquier uso.
 
 %=====================================================================
 \section{Resultados}
@@ -501,26 +583,24 @@ Con más datos de menores, el siguiente paso natural es ajustar finamente WavLM 
 
 \bibitem{sklearn2011} F.~Pedregosa et~al. ``Scikit-learn: Machine Learning in Python''. \emph{Journal of Machine Learning Research}, 12:2825--2830, 2011.
 
+\bibitem{fitch1999} W.~T.~Fitch y J.~Giedd. ``Morphology and development of the human vocal tract: A study using magnetic resonance imaging''. \emph{Journal of the Acoustical Society of America}, 106(3):1511--1522, 1999.
+
+\bibitem{lee1999} S.~Lee, A.~Potamianos y S.~Narayanan. ``Acoustics of children's speech: Developmental changes of temporal and spectral parameters''. \emph{Journal of the Acoustical Society of America}, 105(3):1455--1468, 1999.
+
+\bibitem{keating2012} P.~Keating y G.~Kuo. ``Comparison of speaking fundamental frequency in English and Mandarin''. \emph{Journal of the Acoustical Society of America}, 132(2):1050--1060, 2012.
+
+\bibitem{mennen2012} I.~Mennen, F.~Schaeffler y G.~Docherty. ``Cross-language differences in fundamental frequency range: A comparison of English and German''. \emph{Journal of the Acoustical Society of America}, 131(3):2249--2260, 2012.
+
+\bibitem{gnevsheva2020} K.~Gnevsheva y D.~Bürkle. ``Age estimation in foreign-accented speech by native and non-native speakers''. \emph{Language and Speech}, 2020. \url{https://doi.org/10.1177/0023830919827621}
+
+\bibitem{jiao2019} Jiao et~al. ``Age estimation in foreign-accented speech by non-native speakers of English''. \emph{Speech Communication}, 106:118--126, 2019.
+
+\bibitem{voxceleb2} J.~S.~Chung, A.~Nagrani y A.~Zisserman. ``VoxCeleb2: Deep Speaker Recognition''. \emph{Interspeech}, 2018.
+
+\bibitem{shu2026} S.~Shu, S.~S.~Mohammadi Ziabari y A.~M.~M.~Alsahag. ``Cross-Language Speaker Attribute Prediction Using MIL and RL''. arXiv:2601.04257, 2026.
+
+\bibitem{ncmec2017} National Center for Missing \& Exploited Children. \emph{The Online Enticement of Children: An In-Depth Analysis of CyberTipline Reports}, 2017. \url{https://www.missingkids.org/content/dam/missingkids/pdfs/ncmec-analysis/Online\%20Enticement\%20Exe\%20Summary.pdf}
+
 \end{thebibliography}
-
-%=====================================================================
-\appendix
-\section{Guion sugerido para la presentación}
-%=====================================================================
-
-\begin{enumerate}
-  \item \textbf{El problema:} el grooming en línea crece (546\,000 reportes de incitación en EE.\,UU. en 2024; 7\,263 delitos en Reino Unido) y puede escalar en 45 minutos en un videojuego.
-  \item \textbf{La idea:} la voz delata la edad; detectar ``menor + adulto'' sin escuchar qué dicen.
-  \item \textbf{Principio rector:} alerta para revisión humana, no un decisor.
-  \item \textbf{Privacidad por diseño:} por qué no analizamos el contenido.
-  \item \textbf{Datos:} 23\,893 fragmentos, 27,7 horas, tres clases, partición por hablante.
-  \item \textbf{Cómo funciona:} diagrama del flujo y fórmula del riesgo.
-  \item \textbf{Modelos:} seis modelos y por qué cada uno.
-  \item \textbf{Resultados:} gráfica comparativa; gana ECAPA + máquina de vectores de soporte (F1 0,817).
-  \item \textbf{¿Hace trampa el modelo?:} auditoría de sesgo y prueba con audio degradado.
-  \item \textbf{Demostración:} conversación de prueba niño--adulto, riesgo 71\,\%.
-  \item \textbf{Limitaciones y siguientes pasos:} niños reales, más adolescentes, español.
-  \item \textbf{Conclusiones y consideraciones éticas.}
-\end{enumerate}
 
 \end{document}
