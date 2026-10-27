@@ -36,7 +36,6 @@ curl -F "file=@llamada.mp3" "http://localhost:8000/analyze?num_speakers=2"
   "risk_score": 0.83,
   "risk_percent": 83.0,
   "risk_level": "alto",
-  "explanation": "El hablante 1 parece menor de edad y el hablante 0 parece adulto.",
   "minor_speaker": 1,
   "adult_speaker": 0,
   "num_speakers": 2,

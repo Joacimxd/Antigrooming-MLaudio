@@ -88,7 +88,6 @@ class GroomingRiskAnalyzer:
             "risk_score": risk["score"],
             "risk_percent": round(100 * risk["score"], 1),
             "risk_level": risk["level"],
-            "explanation": risk["reason"],
             "minor_speaker": risk["minor_speaker"],
             "adult_speaker": risk["adult_speaker"],
             "num_speakers": len(results),

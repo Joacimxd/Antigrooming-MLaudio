@@ -35,13 +35,5 @@ def compute_risk(speakers: Sequence[Mapping[str, float]]) -> dict:
             if score > best["score"]:
                 best = {"score": score, "minor_speaker": i, "adult_speaker": j}
 
-    if len(speakers) < 2:
-        reason = "Se detectó un único hablante: no hay interacción menor–adulto que evaluar."
-    elif best["minor_speaker"] is None:
-        reason = "No se detectó una combinación probable de menor y adulto."
-    else:
-        reason = (f"El hablante {best['minor_speaker']} parece menor de edad y el hablante "
-                  f"{best['adult_speaker']} parece adulto.")
-
     score = round(float(best["score"]), 4)
-    return {**best, "score": score, "level": risk_level(score), "reason": reason}
+    return {**best, "score": score, "level": risk_level(score)}

@@ -56,7 +56,6 @@ class AnalysisOut(BaseModel):
     risk_score: float = Field(..., ge=0, le=1)
     risk_percent: float
     risk_level: str
-    explanation: str
     minor_speaker: int | None
     adult_speaker: int | None
     num_speakers: int
