@@ -1,0 +1,71 @@
+{
+  "metricas_test": {
+    "umbral": 0.369,
+    "precision": 0.9,
+    "sensibilidad": 0.769,
+    "f1": 0.829,
+    "auc": 0.978,
+    "precision_media": 0.904
+  },
+  "metricas_test_limpio": {
+    "umbral": 0.369,
+    "precision": 0.95,
+    "sensibilidad": 0.859,
+    "f1": 0.902,
+    "auc": 0.992,
+    "precision_media": 0.955
+  },
+  "comparacion_vs_detector_limpio": {
+    "limpio | test limpio": {
+      "umbral": 0.429,
+      "precision": 0.976,
+      "sensibilidad": 0.851,
+      "f1": 0.909,
+      "auc": 0.992,
+      "precision_media": 0.962
+    },
+    "limpio | test sucio": {
+      "umbral": 0.429,
+      "precision": 0.834,
+      "sensibilidad": 0.67,
+      "f1": 0.743,
+      "auc": 0.965,
+      "precision_media": 0.848
+    },
+    "acoplado | test limpio": {
+      "umbral": 0.369,
+      "precision": 0.95,
+      "sensibilidad": 0.859,
+      "f1": 0.902,
+      "auc": 0.992,
+      "precision_media": 0.955
+    },
+    "acoplado | test sucio": {
+      "umbral": 0.369,
+      "precision": 0.9,
+      "sensibilidad": 0.769,
+      "f1": 0.829,
+      "auc": 0.978,
+      "precision_media": 0.904
+    }
+  },
+  "entrenamiento": "originales y modulados, cada uno limpio y con canal (augment); orden: modulador -> canal",
+  "tipos_entrenamiento": [
+    "pitch_simple",
+    "praat"
+  ],
+  "tipo_no_visto_en_test": [
+    "world"
+  ],
+  "prop_adultos_modulados": 0.25,
+  "rango_factor_f0": [
+    1.2,
+    1.8
+  ],
+  "p_mas_joven": 0.75,
+  "limitaciones": [
+    "Moduladores simulados con tres algoritmos (pitch simple, Praat, WORLD); no cubre apps comerciales ni conversión neuronal",
+    "Los niños son habla sintetizada (ENNI): revisar la tasa de falsos positivos en niños",
+    "Canal simulado con los filtros de grooming_risk/audio.py; fondos reales solo si hay archivos en datasets/noise/"
+  ]
+}
