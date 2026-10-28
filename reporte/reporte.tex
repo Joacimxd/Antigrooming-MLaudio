@@ -60,7 +60,7 @@ El \gr{} en línea es el proceso mediante el cual una persona adulta establece c
 
 \subsection{La magnitud del problema}
 
-Los indicadores más recientes coinciden en que el problema crece. En Estados Unidos, el Centro Nacional para Niños Desaparecidos y Explotados (NCMEC) recibió en 2024 más de 546\,000 reportes de \emph{online enticement} ---un adulto que se comunica con un menor con fines sexuales---, un aumento de 192\,\% frente a los cerca de 186\,800 de 2023~\cite{thorn2025,ncmec2025}. El mismo organismo registra casi 100 reportes \emph{al día} de extorsión sexual con fines económicos, y al menos 36 adolescentes varones se han quitado la vida tras ser víctimas desde 2021~\cite{ncmec2025}. En el Reino Unido, la policía registró 7\,263 delitos de comunicación sexual con un menor en 2024/25, casi el doble que en 2017/18; en el 40\,\% de los casos con plataforma identificada, el contacto ocurrió en Snapchat~\cite{nspcc2025}.
+Los indicadores más recientes coinciden en que el problema crece. En Estados Unidos, el Centro Nacional para Niños Desaparecidos y Explotados (NCMEC) recibió en 2024 más de 546\,000 reportes de \emph{online enticement} ---un adulto que se comunica con un menor con fines sexuales---, un aumento de 192\,\% frente a los cerca de 186\,800 de 2023~\cite{ncmec2025,thorn2025}. El mismo organismo registra casi 100 reportes \emph{al día} de extorsión sexual con fines económicos, y al menos 36 adolescentes varones se han quitado la vida tras ser víctimas desde 2021~\cite{ncmec2025}. En el Reino Unido, la policía registró 7\,263 delitos de comunicación sexual con un menor en 2024/25, casi el doble que en 2017/18; en el 40\,\% de los casos con plataforma identificada, el contacto ocurrió en Snapchat~\cite{nspcc2025}.
 
 Los videojuegos en línea merecen atención especial. Según la WeProtect Global Alliance, en estas plataformas una conversación puede escalar a una situación de \gr{} de alto riesgo en $45\,\mathrm{min}$ en promedio, y en casos extremos en apenas $19\,\mathrm{s}$; la misma organización reporta un aumento de 87\,\% en los reportes de material de abuso sexual infantil entre 2019 y 2023~\cite{weprotect2023}. En México, el Módulo sobre Ciberacoso (MOCIBA) 2024 del INEGI estimó que el 21,0\,\% de las personas usuarias de internet de 12 años o más ---18,9 millones--- vivió ciberacoso; la forma más común fue el contacto mediante identidades falsas, y los medios más frecuentes fueron WhatsApp (39,8\,\%) y Facebook (39,7\,\%)~\cite{inegi2025}.
 
@@ -252,7 +252,7 @@ No existe un corpus público grande que tenga, en un mismo canal de grabación, 
 \toprule
 \textbf{Corpus} & \textbf{Contenido} & \textbf{Edad} & \textbf{Clase} \\
 \midrule
-ENNI (habla infantil sintetizada)~\cite{enni2005,enniHF} & 9\,997 fragmentos de 349 niños de 4 a 10 años, generados a partir de narraciones reales; incluye niños con desarrollo típico y con trastorno del lenguaje & Exacta & Niño \\
+ENNI (habla infantil sintetizada)~\cite{enniHF,enni2005} & 9\,997 fragmentos de 349 niños de 4 a 10 años, generados a partir de narraciones reales; incluye niños con desarrollo típico y con trastorno del lenguaje & Exacta & Niño \\
 Common Voice, década \emph{teens}~\cite{commonvoice2020} & Voluntarios grabados con micrófonos caseros & ``Menor de 19'' & Adolescente \\
 Common Voice, década \emph{twenties} y mayores & 143\,170 fragmentos con edad declarada en total & Por década & Adulto \\
 \bottomrule
@@ -854,99 +854,101 @@ Además de esas mejoras, hay tres líneas de trabajo. La primera es el ajuste fi
 \section{Declaración de uso de IA}
 %=====================================================================
 
-\aviso{\textbf{Pendiente.} Esta sección se completará más adelante.}
+En la elaboración de este trabajo se usaron dos herramientas de inteligencia artificial generativa como apoyo. Gemini (Google) se usó como apoyo en la investigación, principalmente para la búsqueda inicial de trabajos relacionados, de estadísticas sobre \gr{} en línea y de corpus de voz infantil disponibles; este apoyo se refleja en la Introducción, los Trabajos relacionados y el Marco teórico. Claude (Anthropic) se usó como apoyo con el formato \LaTeX{} del reporte ---la estructura del documento, las tablas, las figuras y la bibliografía--- y para consultas puntuales de código durante la implementación.
+
+Las fuentes sugeridas durante la investigación se consultaron y verificaron directamente antes de citarse. El diseño del sistema, la selección de los datos, el entrenamiento y la evaluación de los modelos, el análisis de los resultados y las conclusiones son trabajo del equipo.
 
 %=====================================================================
 \begin{thebibliography}{99}
 \small
 
-\bibitem{whittle2013} H.~Whittle, C.~Hamilton-Giachritsis, A.~Beech y G.~Collings. \emph{A review of online grooming: Characteristics and concerns}. \emph{Aggression and Violent Behavior}, 18(1):62--70, 2013.
-
-\bibitem{ncmec2025} National Center for Missing \& Exploited Children. \emph{NCMEC Releases New Data: 2024 in Numbers}, 2025. \url{https://www.missingkids.org/blog/2025/ncmec-releases-new-data-2024-in-numbers}
-
-\bibitem{thorn2025} Thorn. \emph{What the 2024 NCMEC CyberTipline Report Says About Child Safety}, 2025. \url{https://www.thorn.org/blog/what-the-2024-ncmec-cybertipline-report-says-about-child-safety/}
-
-\bibitem{nspcc2025} NSPCC. \emph{Data shows how criminals are using private messaging platforms to manipulate and groom children}, noviembre de 2025. \url{https://www.nspcc.org.uk/about-us/news-opinion/2025/data-shows-how-criminals-are-using-private-messaging-platforms-to-manipulate-and-groom-children/}
-
-\bibitem{weprotect2023} WeProtect Global Alliance. \emph{Global Threat Assessment 2023}. \url{https://www.weprotect.org/global-threat-assessment-23/}
-
-\bibitem{inegi2025} INEGI. Módulo sobre Ciberacoso (MOCIBA) 2024, comunicado de prensa 76/25, 17 de julio de 2025. \url{https://www.inegi.org.mx/programas/mociba/2024/}
-
-\bibitem{edpb2022} EDPB y EDPS. \emph{Joint Opinion 4/2022 on the Proposal for a Regulation laying down rules to prevent and combat child sexual abuse}, 28 de julio de 2022. \url{https://edps.europa.eu/data-protection/our-work/publications/edps-edpb-joint-opinions/2022-07-28-joint-opinion-42022-regulation-european-parliament-and-council-rules-prevent-and-combat-child-sexual-abuse_en}
-
-\bibitem{pan2012} G.~Inches y F.~Crestani. \emph{Overview of the International Sexual Predator Identification Competition at PAN-2012}. \emph{CLEF 2012 Evaluation Labs and Workshop}, 2012.
-
-\bibitem{villatoro2012} E.~Villatoro-Tello, A.~Juárez-González, H.~J.~Escalante, M.~Montes-y-Gómez y L.~Villaseñor-Pineda. \emph{A two-step approach for effective detection of misbehaving users in chats}. \emph{CLEF 2012 Evaluation Labs and Workshop}, 2012.
-
-\bibitem{ebrahimi2016} M.~Ebrahimi, C.~Y.~Suen y O.~Ormandjieva. \emph{Detecting predatory conversations in social media by deep convolutional neural networks}. \emph{Digital Investigation}, 18:33--49, 2016.
-
-\bibitem{metze2007} F.~Metze, J.~Ajmera, R.~Englert, U.~Bub, F.~Burkhardt, J.~Stegmann, C.~Müller, R.~Huber, B.~Andrassy, J.~G.~Bauer y B.~Littel. \emph{Comparison of four approaches to age and gender recognition for telephone applications}. \emph{IEEE ICASSP}, 2007.
-
-\bibitem{schuller2010} B.~Schuller, S.~Steidl, A.~Batliner, F.~Burkhardt, L.~Devillers, C.~Müller y S.~Narayanan. \emph{The INTERSPEECH 2010 Paralinguistic Challenge}. \emph{Interspeech}, 2010.
+\bibitem{commonvoice2020} R.~Ardila et~al. \emph{Common Voice: A Massively-Multilingual Speech Corpus}. \emph{Proceedings of LREC}, 2020.
 
 \bibitem{bahari2014} M.~H.~Bahari, M.~McLaren, H.~Van~hamme y D.~A.~van~Leeuwen. \emph{Speaker age estimation using i-vectors}. \emph{Engineering Applications of Artificial Intelligence}, 34:99--108, 2014.
 
-\bibitem{ghahremani2018} P.~Ghahremani, P.~S.~Nidadavolu, N.~Chen, J.~Villalba, D.~Povey, S.~Khudanpur y N.~Dehak. \emph{End-to-end deep neural network age estimation}. \emph{Interspeech}, 2018.
-
-\bibitem{xvector2018} D.~Snyder, D.~Garcia-Romero, G.~Sell, D.~Povey y S.~Khudanpur. \emph{X-vectors: Robust DNN embeddings for speaker recognition}. \emph{IEEE ICASSP}, 2018.
-
-\bibitem{burkhardt2023} F.~Burkhardt, J.~Wagner, H.~Wierstorf, F.~Eyben y B.~Schuller. \emph{Speech-based age and gender prediction with transformers}. \emph{ITG Conference on Speech Communication}, 2023.
-
-\bibitem{park2022} T.~J.~Park, N.~Kanda, D.~Dimitriadis, K.~J.~Han, S.~Watanabe y S.~Narayanan. \emph{A review of speaker diarization: Recent advances with deep learning}. \emph{Computer Speech \& Language}, 72:101317, 2022.
+\bibitem{praat} P.~Boersma y D.~Weenink. \emph{Praat: doing phonetics by computer}. \url{https://www.praat.org}; usado mediante Y.~Jadoul, B.~Thompson y B.~de~Boer, \emph{Introducing Parselmouth: A Python interface to Praat}, \emph{Journal of Phonetics}, 71:1--15, 2018.
 
 \bibitem{pyannote2020} H.~Bredin et~al. \emph{pyannote.audio: neural building blocks for speaker diarization}. \emph{IEEE ICASSP}, 2020.
 
-\bibitem{wu2014} H.~Wu, Y.~Wang y J.~Huang. \emph{Identification of electronic disguised voices}. \emph{IEEE Transactions on Information Forensics and Security}, 9(3):489--500, 2014.
+\bibitem{rf2001} L.~Breiman. \emph{Random Forests}. \emph{Machine Learning}, 45:5--32, 2001.
 
-\bibitem{todisco2019} M.~Todisco, X.~Wang, V.~Vestman, M.~Sahidullah, H.~Delgado, A.~Nautsch, J.~Yamagishi, N.~Evans, T.~Kinnunen y K.~A.~Lee. \emph{ASVspoof 2019: Future horizons in spoofed and fake audio detection}. \emph{Interspeech}, 2019.
-
-\bibitem{ko2015} T.~Ko, V.~Peddinti, D.~Povey y S.~Khudanpur. \emph{Audio augmentation for speech recognition}. \emph{Interspeech}, 2015.
-
-\bibitem{fant1960} G.~Fant. \emph{Acoustic Theory of Speech Production}. Mouton, La Haya, 1960.
-
-\bibitem{lee1999} S.~Lee, A.~Potamianos y S.~Narayanan. \emph{Acoustics of children's speech: Developmental changes of temporal and spectral parameters}. \emph{Journal of the Acoustical Society of America}, 105(3):1455--1468, 1999.
-
-\bibitem{davis1980} S.~Davis y P.~Mermelstein. \emph{Comparison of parametric representations for monosyllabic word recognition in continuously spoken sentences}. \emph{IEEE Transactions on Acoustics, Speech, and Signal Processing}, 28(4):357--366, 1980.
-
-\bibitem{furui1986} S.~Furui. \emph{Speaker-independent isolated word recognition using dynamic features of speech spectrum}. \emph{IEEE Transactions on Acoustics, Speech, and Signal Processing}, 34(1):52--59, 1986.
-
-\bibitem{enni2005} P.~Schneider, R.~V.~Dubé y D.~Hayward. \emph{The Edmonton Narrative Norms Instrument}. \emph{University of Alberta}, 2005.
-
-\bibitem{enniHF} jsun39. \emph{enni-child-speech-synthesis} (conjunto de datos). Hugging Face. \url{https://huggingface.co/datasets/jsun39/enni-child-speech-synthesis}
-
-\bibitem{commonvoice2020} R.~Ardila et~al. \emph{Common Voice: A Massively-Multilingual Speech Corpus}. \emph{Proceedings of LREC}, 2020.
-
-\bibitem{ecapa2020} B.~Desplanques, J.~Thienpondt y K.~Demuynck. \emph{ECAPA-TDNN: Emphasized Channel Attention, Propagation and Aggregation in TDNN Based Speaker Verification}. \emph{Interspeech}, 2020.
-
-\bibitem{speechbrain2021} M.~Ravanelli et~al. \emph{SpeechBrain: A General-Purpose Speech Toolkit}. arXiv:2106.04624, 2021.
+\bibitem{burkhardt2023} F.~Burkhardt, J.~Wagner, H.~Wierstorf, F.~Eyben y B.~Schuller. \emph{Speech-based age and gender prediction with transformers}. \emph{ITG Conference on Speech Communication}, 2023.
 
 \bibitem{wavlm2022} S.~Chen et~al. \emph{WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing}. \emph{IEEE Journal of Selected Topics in Signal Processing}, 16(6), 2022.
 
-\bibitem{superb2021} S.~Yang et~al. \emph{SUPERB: Speech processing Universal PERformance Benchmark}. \emph{Interspeech}, 2021.
-
 \bibitem{svm1995} C.~Cortes y V.~Vapnik. \emph{Support-vector networks}. \emph{Machine Learning}, 20:273--297, 1995.
 
-\bibitem{rf2001} L.~Breiman. \emph{Random Forests}. \emph{Machine Learning}, 45:5--32, 2001.
+\bibitem{davis1980} S.~Davis y P.~Mermelstein. \emph{Comparison of parametric representations for monosyllabic word recognition in continuously spoken sentences}. \emph{IEEE Transactions on Acoustics, Speech, and Signal Processing}, 28(4):357--366, 1980.
 
-\bibitem{friedman2001} J.~H.~Friedman. \emph{Greedy function approximation: A gradient boosting machine}. \emph{Annals of Statistics}, 29(5):1189--1232, 2001.
+\bibitem{ecapa2020} B.~Desplanques, J.~Thienpondt y K.~Demuynck. \emph{ECAPA-TDNN: Emphasized Channel Attention, Propagation and Aggregation in TDNN Based Speaker Verification}. \emph{Interspeech}, 2020.
 
-\bibitem{platt1999} J.~Platt. \emph{Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods}. \emph{Advances in Large Margin Classifiers}, 1999.
+\bibitem{ebrahimi2016} M.~Ebrahimi, C.~Y.~Suen y O.~Ormandjieva. \emph{Detecting predatory conversations in social media by deep convolutional neural networks}. \emph{Digital Investigation}, 18:33--49, 2016.
 
-\bibitem{sklearn2011} F.~Pedregosa et~al. \emph{Scikit-learn: Machine Learning in Python}. \emph{Journal of Machine Learning Research}, 12:2825--2830, 2011.
+\bibitem{edpb2022} EDPB y EDPS. \emph{Joint Opinion 4/2022 on the Proposal for a Regulation laying down rules to prevent and combat child sexual abuse}, 28 de julio de 2022. \url{https://edps.europa.eu/data-protection/our-work/publications/edps-edpb-joint-opinions/2022-07-28-joint-opinion-42022-regulation-european-parliament-and-council-rules-prevent-and-combat-child-sexual-abuse_en}
 
-\bibitem{titze1989} I.~R.~Titze. \emph{Physiologic and acoustic differences between male and female voices}. \emph{Journal of the Acoustical Society of America}, 85(4):1699--1707, 1989.
-
-\bibitem{hillenbrand1995} J.~Hillenbrand, L.~A.~Getty, M.~J.~Clark y K.~Wheeler. \emph{Acoustic characteristics of American English vowels}. \emph{Journal of the Acoustical Society of America}, 97(5):3099--3111, 1995.
-
-\bibitem{tatman2017} R.~Tatman. \emph{Gender and dialect bias in YouTube's automatic captions}. \emph{Proceedings of the First ACL Workshop on Ethics in Natural Language Processing}, 53--59, 2017.
-
-\bibitem{garnerin2019} M.~Garnerin, S.~Rossato y L.~Besacier. \emph{Gender representation in French broadcast corpora and its impact on ASR performance}. \emph{Proceedings of the 1st International Workshop on AI for Smart TV Content Production, Access and Delivery (AI4TV)}, ACM, 2019.
+\bibitem{fant1960} G.~Fant. \emph{Acoustic Theory of Speech Production}. Mouton, La Haya, 1960.
 
 \bibitem{fawcett2006} T.~Fawcett. \emph{An introduction to ROC analysis}. \emph{Pattern Recognition Letters}, 27(8):861--874, 2006.
 
-\bibitem{praat} P.~Boersma y D.~Weenink. \emph{Praat: doing phonetics by computer}. \url{https://www.praat.org}; usado mediante Y.~Jadoul, B.~Thompson y B.~de~Boer, \emph{Introducing Parselmouth: A Python interface to Praat}, \emph{Journal of Phonetics}, 71:1--15, 2018.
+\bibitem{friedman2001} J.~H.~Friedman. \emph{Greedy function approximation: A gradient boosting machine}. \emph{Annals of Statistics}, 29(5):1189--1232, 2001.
+
+\bibitem{furui1986} S.~Furui. \emph{Speaker-independent isolated word recognition using dynamic features of speech spectrum}. \emph{IEEE Transactions on Acoustics, Speech, and Signal Processing}, 34(1):52--59, 1986.
+
+\bibitem{garnerin2019} M.~Garnerin, S.~Rossato y L.~Besacier. \emph{Gender representation in French broadcast corpora and its impact on ASR performance}. \emph{Proceedings of the 1st International Workshop on AI for Smart TV Content Production, Access and Delivery (AI4TV)}, ACM, 2019.
+
+\bibitem{ghahremani2018} P.~Ghahremani, P.~S.~Nidadavolu, N.~Chen, J.~Villalba, D.~Povey, S.~Khudanpur y N.~Dehak. \emph{End-to-end deep neural network age estimation}. \emph{Interspeech}, 2018.
+
+\bibitem{hillenbrand1995} J.~Hillenbrand, L.~A.~Getty, M.~J.~Clark y K.~Wheeler. \emph{Acoustic characteristics of American English vowels}. \emph{Journal of the Acoustical Society of America}, 97(5):3099--3111, 1995.
+
+\bibitem{pan2012} G.~Inches y F.~Crestani. \emph{Overview of the International Sexual Predator Identification Competition at PAN-2012}. \emph{CLEF 2012 Evaluation Labs and Workshop}, 2012.
+
+\bibitem{inegi2025} INEGI. Módulo sobre Ciberacoso (MOCIBA) 2024, comunicado de prensa 76/25, 17 de julio de 2025. \url{https://www.inegi.org.mx/programas/mociba/2024/}
+
+\bibitem{enniHF} jsun39. \emph{enni-child-speech-synthesis} (conjunto de datos). Hugging Face. \url{https://huggingface.co/datasets/jsun39/enni-child-speech-synthesis}
+
+\bibitem{ko2015} T.~Ko, V.~Peddinti, D.~Povey y S.~Khudanpur. \emph{Audio augmentation for speech recognition}. \emph{Interspeech}, 2015.
+
+\bibitem{lee1999} S.~Lee, A.~Potamianos y S.~Narayanan. \emph{Acoustics of children's speech: Developmental changes of temporal and spectral parameters}. \emph{Journal of the Acoustical Society of America}, 105(3):1455--1468, 1999.
+
+\bibitem{metze2007} F.~Metze, J.~Ajmera, R.~Englert, U.~Bub, F.~Burkhardt, J.~Stegmann, C.~Müller, R.~Huber, B.~Andrassy, J.~G.~Bauer y B.~Littel. \emph{Comparison of four approaches to age and gender recognition for telephone applications}. \emph{IEEE ICASSP}, 2007.
 
 \bibitem{world2016} M.~Morise, F.~Yokomori y K.~Ozawa. \emph{WORLD: A Vocoder-Based High-Quality Speech Synthesis System for Real-Time Applications}. \emph{IEICE Transactions on Information and Systems}, E99-D(7):1877--1884, 2016.
+
+\bibitem{ncmec2025} National Center for Missing \& Exploited Children. \emph{NCMEC Releases New Data: 2024 in Numbers}, 2025. \url{https://www.missingkids.org/blog/2025/ncmec-releases-new-data-2024-in-numbers}
+
+\bibitem{nspcc2025} NSPCC. \emph{Data shows how criminals are using private messaging platforms to manipulate and groom children}, noviembre de 2025. \url{https://www.nspcc.org.uk/about-us/news-opinion/2025/data-shows-how-criminals-are-using-private-messaging-platforms-to-manipulate-and-groom-children/}
+
+\bibitem{park2022} T.~J.~Park, N.~Kanda, D.~Dimitriadis, K.~J.~Han, S.~Watanabe y S.~Narayanan. \emph{A review of speaker diarization: Recent advances with deep learning}. \emph{Computer Speech \& Language}, 72:101317, 2022.
+
+\bibitem{sklearn2011} F.~Pedregosa et~al. \emph{Scikit-learn: Machine Learning in Python}. \emph{Journal of Machine Learning Research}, 12:2825--2830, 2011.
+
+\bibitem{platt1999} J.~Platt. \emph{Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods}. \emph{Advances in Large Margin Classifiers}, 1999.
+
+\bibitem{speechbrain2021} M.~Ravanelli et~al. \emph{SpeechBrain: A General-Purpose Speech Toolkit}. arXiv:2106.04624, 2021.
+
+\bibitem{enni2005} P.~Schneider, R.~V.~Dubé y D.~Hayward. \emph{The Edmonton Narrative Norms Instrument}. \emph{University of Alberta}, 2005.
+
+\bibitem{schuller2010} B.~Schuller, S.~Steidl, A.~Batliner, F.~Burkhardt, L.~Devillers, C.~Müller y S.~Narayanan. \emph{The INTERSPEECH 2010 Paralinguistic Challenge}. \emph{Interspeech}, 2010.
+
+\bibitem{xvector2018} D.~Snyder, D.~Garcia-Romero, G.~Sell, D.~Povey y S.~Khudanpur. \emph{X-vectors: Robust DNN embeddings for speaker recognition}. \emph{IEEE ICASSP}, 2018.
+
+\bibitem{tatman2017} R.~Tatman. \emph{Gender and dialect bias in YouTube's automatic captions}. \emph{Proceedings of the First ACL Workshop on Ethics in Natural Language Processing}, 53--59, 2017.
+
+\bibitem{thorn2025} Thorn. \emph{What the 2024 NCMEC CyberTipline Report Says About Child Safety}, 2025. \url{https://www.thorn.org/blog/what-the-2024-ncmec-cybertipline-report-says-about-child-safety/}
+
+\bibitem{titze1989} I.~R.~Titze. \emph{Physiologic and acoustic differences between male and female voices}. \emph{Journal of the Acoustical Society of America}, 85(4):1699--1707, 1989.
+
+\bibitem{todisco2019} M.~Todisco, X.~Wang, V.~Vestman, M.~Sahidullah, H.~Delgado, A.~Nautsch, J.~Yamagishi, N.~Evans, T.~Kinnunen y K.~A.~Lee. \emph{ASVspoof 2019: Future horizons in spoofed and fake audio detection}. \emph{Interspeech}, 2019.
+
+\bibitem{villatoro2012} E.~Villatoro-Tello, A.~Juárez-González, H.~J.~Escalante, M.~Montes-y-Gómez y L.~Villaseñor-Pineda. \emph{A two-step approach for effective detection of misbehaving users in chats}. \emph{CLEF 2012 Evaluation Labs and Workshop}, 2012.
+
+\bibitem{weprotect2023} WeProtect Global Alliance. \emph{Global Threat Assessment 2023}. \url{https://www.weprotect.org/global-threat-assessment-23/}
+
+\bibitem{whittle2013} H.~Whittle, C.~Hamilton-Giachritsis, A.~Beech y G.~Collings. \emph{A review of online grooming: Characteristics and concerns}. \emph{Aggression and Violent Behavior}, 18(1):62--70, 2013.
+
+\bibitem{wu2014} H.~Wu, Y.~Wang y J.~Huang. \emph{Identification of electronic disguised voices}. \emph{IEEE Transactions on Information Forensics and Security}, 9(3):489--500, 2014.
+
+\bibitem{superb2021} S.~Yang et~al. \emph{SUPERB: Speech processing Universal PERformance Benchmark}. \emph{Interspeech}, 2021.
 
 \end{thebibliography}
 
