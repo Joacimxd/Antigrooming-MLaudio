@@ -1,4 +1,4 @@
-# CLAUDE.md — Estimador de riesgo de grooming por edad de voz
+# Guía del proyecto — Estimador de riesgo de grooming por edad de voz
 
 ## ⚠️ PRINCIPIO RECTOR: ES UNA ALERTA, NO UN DECISOR
 
@@ -20,7 +20,7 @@ NO es, ni debe usarse como, un decisor definitivo.**
   Toda alerta debe pasar por **revisión humana especializada** que considere el contexto completo.
 - El puntaje sirve para **priorizar** qué revisar, no para concluir.
 
-Al modificar este proyecto, Claude (y cualquier colaborador) debe:
+Al modificar este proyecto, cualquier colaborador debe:
 1. Mantener el campo `disclaimer` en **todas** las respuestas de la API (`grooming_risk/config.py::DISCLAIMER`).
 2. No renombrar salidas a términos que sugieran certeza ("grooming detectado", "culpable", "confirmado").
    Usar "riesgo", "alerta", "estimación".

@@ -2,7 +2,7 @@
 
 > **Solo es una alerta / estimador de riesgo, no un decisor definitivo.** Detecta la probable
 > presencia de un menor hablando con un adulto, algo que ocurre en innumerables conversaciones
-> legítimas. Toda alerta requiere revisión humana. Ver [CLAUDE.md](CLAUDE.md).
+> legítimas. Toda alerta requiere revisión humana. Ver [GUIA_PROYECTO.md](GUIA_PROYECTO.md).
 
 ## Resumen
 1. **Diarización**: separa a los hablantes del audio.
